@@ -86,7 +86,7 @@ According to [Divvy Trip Data](https://www.divvybikes.com/system-data), we shoul
 
     DELETE FROM dbo.[divvy.tripdata.202008]
         WHERE ride_length_sec < 60;
-    
+
 ### Remove Test Fields
 
 There were certain trips that indicated the station ID were test stations.  Let's remove these trips as they will not provide any insights into our analysis.
@@ -167,7 +167,9 @@ Repeat the above processes for the rest of the monthly trip data tables.  Once t
 
 ## Analysis
 
-Chart #1:  Average Monthly Ride Length
+### Chart #1:  Average Monthly Ride Length
+
+It would be helpful to analyze and visualize the average bike trip length per month.  Below is the SQL used to create the visualization in Excel:
 
     SELECT * FROM (
         SELECT
@@ -187,7 +189,11 @@ Chart #1:  Average Monthly Ride Length
 
 ![Average Monthly Ride Length](./avg-monthly-ride-length.png)
 
-Chart #2:  Average Ride Length by Weekday
+As we can see, member riders tend to be steady in their utilization of our bikes.  However, the casual ridership is a lot more erratic.  Overall, casual riders tend to take longer trips than members.
+
+### Chart #2:  Average Ride Length by Weekday
+
+Let's analyze the average bike trip length per weekday from August 2020 through July 2021.  Below is the SQL statement used to create the visualization in Excel:
 
     SELECT * FROM (
         SELECT
@@ -206,7 +212,11 @@ Chart #2:  Average Ride Length by Weekday
 
 ![Average Ride Length per Weekday](./avg-ride-length-per-weekday.png)
 
-Chart #3:  Total Monthly Ridership
+Just as in the monthly analysis of average ride times, casual riders have a tendency of taking longer trips than our members.  Members take consistent rides throughout the week.
+
+### Chart #3:  Total Monthly Ridership
+
+Below is the analysis of the number of individual bike trips for each month between August 2020 through July 2021.  SQL statement used to generate the visualization:
 
     SELECT * FROM (
         SELECT
@@ -226,7 +236,11 @@ Chart #3:  Total Monthly Ridership
 
 ![Total Ridership by Month](./total-ridership-by-month.png)
 
-Chart #4:  Total Ridership by Weekday
+In this chart, there is a huge drop in ridership in the winter months.  However, ridership tends to pick up during warmer weather, especially during the summer months.  This may either be due to a drop in temperature in Chicago, or due to COVID-19 restrictions, or a combination of both.
+
+### Chart #4:  Total Ridership by Weekday
+
+Let's see the total number of individual bike ride for each day of the week.  Below is the SQL statement used to generate the chart that follows:
 
     SELECT * FROM (
         SELECT
@@ -243,26 +257,28 @@ Chart #4:  Total Ridership by Weekday
 
 ![Total Ridership by Weekday](./total-ridership-by-weekday-categories.png)
 
+Again, it seems that our member riders have consistent utilization numbers throughout the week.  Casual riders have a more varied usage.  Fridays, Saturdays, and Sundays seem to be the most popular days among casual riders.
+
 ## Recommendations
 
 ### Recommendation #1
 
+Based on the number of riders on Friday, Saturday, and Sunday (Chart #4), we can hold special membership drive events on the weekends.  Our analysis shows that casual riders tend to ride on the weekends.  This is a great opportunity to employ marketing campaigns during this weekend to maximize the chance to convert some of our casual riders to members.
 
+Instead of relying on general awareness to gain ridership, we can utilize a social media campaign to convince casual riders to become members.  Perhaps showing casual riders the benefits of becoming a member on social media platforms may convince them to purchase memberships.
 
 ### Recommendation #2
 
-
+Based on our analysis of total ridership by month (Chart #3), all riders (including casual riders) tend to utilize our services during the summer months, especially June and July.  This is also presents a great opportunity to hold membership campaigns to convert casual riders to members.
 
 ### Recommendation #3
 
-
+Based on our analysis of the average length of a single trip by weekday and month (Charts #1 and #2), casual riders have a tendency of taking longer trips than members.  We could offer a rewards or incentives program for members who utilize our bikes.  This may entice casual members to become members.
 
 ## Presentation
 
 [PowerPoint Slides](./Cyclistic-Deliverables.pptx)
 
-
 ## Change Log
 
 [Change Log](./Cyclistic-Change-Log.xlsx)
-

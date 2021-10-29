@@ -104,9 +104,13 @@ Remove trips that are missing any coordinates or docking station identifiers
     DELETE FROM dbo.[divvy.tripdata.202008]
         WHERE start_station_id IS NULL OR end_station_id IS NULL;
 
+### Station Identifiers
+
+According to Cyclistic's [list of current bike stations](https://data.cityofchicago.org/Transportation/Divvy-Bicycle-Stations/bbyy-e7gq), docking station identifiers are only numeric values.  However, starting in November 2020's bike sharing data, there are a significant number of non-numeric station identifiers.  For each month's data beginning November 2020, approximately 50% of the station identifiers are non-numeric.  I could not find any references to the non-numeric station identifiers on Cyclistic (Divvy Bikes) web site.  Rather than excluding half the data for the months (November 2020 through July 2021), I'll assume that these trips are not for testing purposes.  The data for non-numeric station identifiers seem to fall in line with the rest of the data with numeric station identifiers.
+
 ### Combine Tables
 
-Creation of combined table:
+The following SQL statement will create the table which will contain all of our data used for this analysis:
 
     CREATE TABLE dbo.[cyclistic.tripdata](
         [ride_id] [nvarchar](50) NOT NULL,
@@ -128,7 +132,7 @@ Creation of combined table:
         CONSTRAINT PK_cyclistictripdata_rideid PRIMARY KEY (ride_id)
     )
 
-Repeat the above processes for the rest of the monthly trip data tables.  Once that is complete, use the following SQL statement to copy each table to the main table (dbo.[cyclistic.tripdata]).
+Now incorporate the monthly data tables into the main data table.  Use the following SQL statement to copy each table to the main table (dbo.[cyclistic.tripdata]).
 
     INSERT INTO dbo.[cyclistic.tripdata] (
         ride_id,
@@ -167,9 +171,11 @@ Repeat the above processes for the rest of the monthly trip data tables.  Once t
 
 ## Analysis
 
+For our analysis, we will be using pivot tables to get a summary of various scenarios.  Use the result table to create visualizations in Excel.
+
 ### Chart #1:  Average Monthly Ride Length
 
-It would be helpful to analyze and visualize the average bike trip length per month.  Below is the SQL used to create the visualization in Excel:
+It would be helpful to analyze and visualize the average bike trip length per month for casual and member riders.  SQL statement used to create the visualization in Excel:
 
     SELECT * FROM (
         SELECT
@@ -193,7 +199,7 @@ As we can see, member riders tend to be steady in their utilization of our bikes
 
 ### Chart #2:  Average Ride Length by Weekday
 
-Let's analyze the average bike trip length per weekday from August 2020 through July 2021.  Below is the SQL statement used to create the visualization in Excel:
+Let's analyze the average bike trip length per weekday from August 2020 through July 2021 for casual and member riders.  SQL statement used to create the visualization in Excel:
 
     SELECT * FROM (
         SELECT
@@ -216,7 +222,7 @@ Just as in the monthly analysis of average ride times, casual riders have a tend
 
 ### Chart #3:  Total Monthly Ridership
 
-Below is the analysis of the number of individual bike trips for each month between August 2020 through July 2021.  SQL statement used to generate the visualization:
+Analysis of the number of casual and member bike trips for each month between August 2020 through July 2021.  SQL statement used to generate the visualization:
 
     SELECT * FROM (
         SELECT
@@ -240,7 +246,7 @@ In this chart, there is a huge drop in ridership in the winter months.  However,
 
 ### Chart #4:  Total Ridership by Weekday
 
-Let's see the total number of individual bike ride for each day of the week.  Below is the SQL statement used to generate the chart that follows:
+Let's see the total number of casual and member bike rides for each day of the week.  SQL statement used to generate the chart that follows:
 
     SELECT * FROM (
         SELECT
